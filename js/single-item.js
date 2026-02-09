@@ -17,3 +17,11 @@ function createSingleItem(item) {
 
   return $div;
 }
+function createSingleItem(item) {
+  
+  $div.find('input[type="checkbox"]').on("change", function () {
+    editCompleted(item.id);
+  });
+
+  return $div;
+}
