@@ -25,3 +25,11 @@ function createSingleItem(item) {
 
   return $div;
 }
+function createSingleItem(item) {
+  
+  $div.find(".remove-btn").on("click", function () {
+    removeItem(item.id);
+  });
+
+  return $div;
+}
