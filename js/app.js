@@ -117,3 +117,52 @@ function setEditId(itemId) {
     $(".form-input").focus();
   }, 0);
 }
+
+
+function getLocalStorage() {
+  var list = localStorage.getItem("grocery-list");
+  if (list) {
+    return JSON.parse(list);
+  }
+  return [];
+}
+
+function setLocalStorage(itemsArray) {
+  localStorage.setItem("grocery-list", JSON.stringify(itemsArray));
+}
+
+
+var items = getLocalStorage();
+var editId = null;
+
+
+function addItem(itemName) {
+  // ....
+  setLocalStorage(items);
+  render();
+}
+
+
+function editCompleted(itemId) {
+  // ....
+  setLocalStorage(items);
+  render();
+}
+
+
+function removeItem(itemId) {
+  items = $.grep(items, function (item) {
+    return item.id !== itemId;
+  });
+  setLocalStorage(items);
+  render();
+}
+
+
+function updateItemName(newName) {
+  // ....
+  setLocalStorage(items);
+  render();
+}
+
+// ....
