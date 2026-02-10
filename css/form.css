@@ -1,47 +1,63 @@
 form h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  text-transform: capitalize;
-  font-weight: 500;
-  color: #0f172a;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    text-transform: capitalize;
+    font-weight: 500;
+    color: #0f172a;
 }
 
-/* Form container */
 .form-control {
-  display: grid;
-  grid-template-columns: 1fr 110px;
-  border-radius: 0.75rem;
-  overflow: hidden;
-  background: rgba(6, 182, 212, 0.08);
+    display: grid;
+    grid-template-columns: 1fr 110px;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: rgba(6, 182, 212, 0.08);
 }
 
-/* Input */
 .form-input {
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  border: none;
-  outline: none;
-  font-size: 0.95rem;
-  background: transparent;
-  color: #0f172a;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    outline: none;
+    font-size: 0.95rem;
+    background: transparent;
+    color: #0f172a;
 }
 
 .form-input::placeholder {
-  color: #94a3b8;
+    color: #94a3b8;
 }
 
-/* Button */
 .form-control .btn {
-  cursor: pointer;
-  color: #ffffff;
-  background: linear-gradient(135deg, #06b6d4, #38bdf8);
-  border: none;
-  font-weight: 500;
-  text-transform: capitalize;
-  transition: background 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+    color: #ffffff;
+    background: linear-gradient(135deg, #06b6d4, #38bdf8);
+    border: none;
+    font-weight: 500;
+    text-transform: capitalize;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .form-control .btn:hover {
-  background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  transform: translateY(-1px);
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    transform: translateY(-1px);
+}
+
+.clear-btn {
+    cursor: pointer;
+    display: block;
+    margin: 1rem auto 0;
+    padding: 0.5rem 1.5rem;
+    color: #ffffff;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.clear-btn:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    transform: translateY(-1px);
 }

@@ -1,168 +1,110 @@
-var items = groceryItems;
+// Global variables
+var items = getInitialItems();
+var editId = null;
+
+// Generate unique ID
+function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
 
 // Render App
 function render() {
-  var $app = $("#app");
-  $app.empty();
+    var $app = $("#app");
+    $app.empty();
 
-  var $itemsElement = createItems(items);
-  $app.append($itemsElement);
+    var itemToEdit = editId
+        ? $.grep(items, function (item) {
+              return item.id === editId;
+          })[0]
+        : null;
+    var $formElement = createForm(editId, itemToEdit);
+    var $itemsElement = createItems(items);
+
+    $app.append($formElement);
+    $app.append($itemsElement);
 }
 
 // Initialize App
 $(document).ready(function () {
-  render();
+    render();
 });
-// ....
 
-
-function editCompleted(itemId) {
-  items = $.map(items, function (item) {
-    if (item.id === itemId) {
-      return $.extend({}, item, { completed: !item.completed });
-    }
-    return item;
-  });
-  render();
-}
-
-function removeItem(itemId) {
-  items = $.grep(items, function (item) {
-    return item.id !== itemId;
-  });
-  render();
-  setTimeout(function () {
-    alert("Item Deleted Successfully!");
-  }, 0);
-}
-
-
-
-function render() {
-  var $app = $("#app");
-  $app.empty();
-
-  var $formElement = createForm();
-  var $itemsElement = createItems(items);
-
-  $app.append($formElement);
-  $app.append($itemsElement);
-}
-
-
-function generateId() {
-  return Date.now().toString(36) + Math.random().toString(36).substr(2);
-}
-
-
+// Add new item
 function addItem(itemName) {
-  var newItem = {
-    name: itemName,
-    completed: false,
-    id: generateId(),
-  };
-  items.push(newItem);
-  render();
-  setTimeout(function () {
-    alert("Item Added Successfully!");
-  }, 0);
+    var newItem = {
+        name: itemName,
+        completed: false,
+        id: generateId(),
+    };
+    items.push(newItem);
+    setLocalStorage(items);
+    render();
+    setTimeout(function () {
+        alert("Item Added Successfully!");
+    }, 0);
 }
 
-
-var editId = null;
-
-
-function render() {
-  var $app = $("#app");
-  $app.empty();
-
-  var itemToEdit = editId
-    ? $.grep(items, function (item) {
-        return item.id === editId;
-      })[0]
-    : null;
-  var $formElement = createForm(editId, itemToEdit); 
-  var $itemsElement = createItems(items);
-
-  $app.append($formElement);
-  $app.append($itemsElement);
+// Toggle completed status
+function editCompleted(itemId) {
+    items = $.map(items, function (item) {
+        if (item.id === itemId) {
+            return $.extend({}, item, { completed: !item.completed });
+        }
+        return item;
+    });
+    setLocalStorage(items);
+    render();
 }
 
-
-$(document).ready(function () {
-  render();
-});
-
-
-function updateItemName(newName) {
-  items = $.map(items, function (item) {
-    if (item.id === editId) {
-      return $.extend({}, item, { name: newName });
+// Remove item
+function removeItem(itemId) {
+    if (confirm("Are you sure you want to delete this item?")) {
+        items = $.grep(items, function (item) {
+            return item.id !== itemId;
+        });
+        setLocalStorage(items);
+        render();
+        setTimeout(function () {
+            alert("Item Deleted Successfully!");
+        }, 0);
     }
-    return item;
-  });
-  editId = null;
-  render();
-  setTimeout(function () {
-    alert("Item Updated Successfully!");
-  }, 0);
 }
 
+// Update item name
+function updateItemName(newName) {
+    items = $.map(items, function (item) {
+        if (item.id === editId) {
+            return $.extend({}, item, { name: newName });
+        }
+        return item;
+    });
+    editId = null;
+    setLocalStorage(items);
+    render();
+    setTimeout(function () {
+        alert("Item Updated Successfully!");
+    }, 0);
+}
 
+// Set edit mode
 function setEditId(itemId) {
-  editId = itemId;
-  render();
+    editId = itemId;
+    render();
 
-  setTimeout(function () {
-    $(".form-input").focus();
-  }, 0);
+    setTimeout(function () {
+        $(".form-input").focus();
+    }, 0);
 }
 
-
+// Local Storage functions
 function getLocalStorage() {
-  var list = localStorage.getItem("grocery-list");
-  if (list) {
-    return JSON.parse(list);
-  }
-  return [];
+    var list = localStorage.getItem("grocery-list");
+    if (list) {
+        return JSON.parse(list);
+    }
+    return [];
 }
 
 function setLocalStorage(itemsArray) {
-  localStorage.setItem("grocery-list", JSON.stringify(itemsArray));
+    localStorage.setItem("grocery-list", JSON.stringify(itemsArray));
 }
-
-
-var items = getLocalStorage();
-var editId = null;
-
-
-function addItem(itemName) {
-  // ....
-  setLocalStorage(items);
-  render();
-}
-
-
-function editCompleted(itemId) {
-  // ....
-  setLocalStorage(items);
-  render();
-}
-
-
-function removeItem(itemId) {
-  items = $.grep(items, function (item) {
-    return item.id !== itemId;
-  });
-  setLocalStorage(items);
-  render();
-}
-
-
-function updateItemName(newName) {
-  // ....
-  setLocalStorage(items);
-  render();
-}
-
-// ....
